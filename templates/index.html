@@ -9,23 +9,58 @@
 
 body{
 font-family:'Poppins',sans-serif;
-background:#111;
-color:white;
 margin:0;
+color:white;
+overflow-x:hidden;
+
+/* fundo gradiente */
+background:
+radial-gradient(circle at 20% 20%, rgba(0,140,255,0.25), transparent 40%),
+radial-gradient(circle at 80% 10%, rgba(255,255,255,0.12), transparent 40%),
+radial-gradient(circle at 50% 90%, rgba(0,80,200,0.25), transparent 40%),
+linear-gradient(180deg,#0a0a0a,#000814,#000000);
+
+background-attachment:fixed;
 }
+
+/* símbolos playstation no fundo */
+
+body::before{
+content:"△ ○ ✕ □   △ ○ ✕ □   △ ○ ✕ □";
+position:fixed;
+top:0;
+left:0;
+width:200%;
+height:200%;
+font-size:120px;
+letter-spacing:40px;
+color:rgba(255,255,255,0.04);
+transform:rotate(-20deg);
+pointer-events:none;
+z-index:0;
+}
+
+/* barra superior */
 
 .top-bar{
 position:fixed;
 top:0;
 width:100%;
-background:#000;
+
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(10px);
+
 padding:12px;
 text-align:center;
-border-bottom:1px solid #222;
+
+border-bottom:1px solid rgba(255,255,255,0.08);
+
 z-index:1000;
 font-size:15px;
 color:#e0e0e0;
 }
+
+/* container */
 
 .container{
 max-width:600px;
@@ -33,55 +68,95 @@ margin:auto;
 margin-top:60px;
 padding:20px;
 text-align:center;
+position:relative;
+z-index:1;
 }
+
+/* logo */
 
 .logo{
 width:140px;
 margin:10px auto 20px auto;
 display:block;
-transition:opacity .4s;
 }
+
+/* filtros */
 
 .filtros{
 margin-bottom:10px;
 }
 
 .filtro-btn{
-background:#1e1e1e;
-color:#fff;
-border:1px solid #333;
+
+background:rgba(255,255,255,0.05);
+color:white;
+
+border:1px solid rgba(255,255,255,0.15);
+
 padding:6px 12px;
 margin:4px;
-border-radius:12px;
+
+border-radius:20px;
+
 font-size:13px;
 cursor:pointer;
+
+transition:all .15s;
 }
 
 .filtro-btn:hover{
+
 background:#008cff;
+border-color:#008cff;
+
+transform:translateY(-1px);
+
 }
 
+/* busca */
+
 input{
+
 width:90%;
 padding:14px;
-border-radius:20px;
+
+border-radius:25px;
 border:none;
+
 font-size:16px;
+
+background:#1b1b1b;
+color:white;
+
+outline:none;
+
+box-shadow:0 4px 15px rgba(0,0,0,0.6);
+
 margin-bottom:20px;
 }
 
+/* cards */
+
 .card{
-background:#1e1e1e;
+background:rgba(30,30,30,0.85);
 padding:16px;
 margin-bottom:12px;
-border-radius:10px;
+border-radius:12px;
 border-left:4px solid #008cff;
+
+backdrop-filter:blur(6px);
+
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+
+transition:all .15s;
 }
 
 .card:hover{
-transform:scale(1.01);
-transition:0.15s;
+transform:scale(1.02);
+box-shadow:0 10px 30px rgba(0,140,255,0.3);
 }
+
+/* textos */
 
 .musica{
 font-weight:bold;

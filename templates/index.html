@@ -111,13 +111,13 @@ color:#bbb;
 <script>
 
 const search = document.getElementById("search")
-const cards = document.querySelectorAll(".card")
 
-search.addEventListener("input",function(){
+search.addEventListener("input", function(){
 
 const value = this.value.toLowerCase()
 
-cards.forEach(card=>{
+document.querySelectorAll(".card").forEach(card => {
+
 const text = card.innerText.toLowerCase()
 
 card.style.display = text.includes(value) ? "block" : "none"

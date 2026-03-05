@@ -132,7 +132,7 @@ font-weight:bold;
 
 {% for m in musicas %}
 
-<div class="card">
+<div class="card" data-tag="{{ m.tag }}">
 
 <div class="musica">{{ m.musica }}</div>
 <div class="artista">{{ m.artista }}</div>
@@ -176,8 +176,13 @@ const value = normalizar(this.value)
 document.querySelectorAll(".card").forEach(card => {
 
 const text = normalizar(card.innerText)
+const tag = normalizar(card.dataset.tag || "")
 
-card.style.display = text.includes(value) ? "block" : "none"
+if(text.includes(value) || tag.includes(value)){
+card.style.display = "block"
+}else{
+card.style.display = "none"
+}
 
 })
 

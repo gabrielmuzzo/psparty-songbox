@@ -72,6 +72,11 @@ font-size:13px;
 color:#bbb;
 }
 
+.sem-bateria{
+color:#ff9a00;
+font-weight:bold;
+}
+
 </style>
 </head>
 
@@ -93,16 +98,21 @@ color:#bbb;
 
 <div class="card">
 
-<div class="artista">{{ m.artista }}</div>
 <div class="musica">{{ m.musica }}</div>
+<div class="artista">{{ m.artista }}</div>
+
 
 {% if m.observacao %}
 
-{% if "sem bateria" in m.observacao.lower() %}
-<div class="observacao sem-bateria">{{ m.observacao }}</div>
-{% else %}
-<div class="observacao">{{ m.observacao }}</div>
-{% endif %}
+<div class="observacao">
+
+{{ m.observacao
+| replace("Sem bateria", '<span class="sem-bateria">Sem bateria</span>')
+| replace("sem bateria", '<span class="sem-bateria">sem bateria</span>')
+| replace("SEM BATERIA", '<span class="sem-bateria">SEM BATERIA</span>')
+| safe }}
+
+</div>
 
 {% endif %}
 

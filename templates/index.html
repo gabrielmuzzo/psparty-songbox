@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PSPARTY</title>
@@ -24,25 +23,23 @@ padding:12px;
 text-align:center;
 border-bottom:1px solid #222;
 z-index:1000;
-
 font-size:15px;
-font-weight:500;
-letter-spacing:0.5px;
 color:#e0e0e0;
 }
 
 .container{
 max-width:600px;
 margin:auto;
-margin-top:40px;
+margin-top:60px;
 padding:20px;
 text-align:center;
 }
 
 .logo{
 width:140px;
-margin:5px auto 20px auto;
+margin:10px auto 20px auto;
 display:block;
+transition:opacity .4s;
 }
 
 input{
@@ -59,7 +56,7 @@ background:#1e1e1e;
 padding:15px;
 margin-bottom:10px;
 border-radius:10px;
-border-left:4px solid #0669ff;
+border-left:4px solid #ff3c3c;
 }
 
 .artista{
@@ -90,50 +87,44 @@ color:#bbb;
 
 <input type="text" id="search" placeholder="Pesquisar artista ou música..." autofocus>
 
-<div id="songs">
-
-{% for m in musicas %}
-
-<div class="card">
-
-<div class="artista">{{ m.artista }}</div>
-<div class="musica">{{ m.musica }}</div>
-
-{% if m.observacao %}
-<div class="observacao">{{ m.observacao }}</div>
-{% endif %}
-
-</div>
-
-{% endfor %}
-
-</div>
+<div id="songs"></div>
 
 </div>
 
 <script>
 
 const search = document.getElementById("search")
-const cards = document.querySelectorAll(".card")
+const songs = document.getElementById("songs")
 
-search.addEventListener("input",function(){
+search.addEventListener("input", async function(){
 
-const value = this.value.toLowerCase()
+const termo = this.value
 
-cards.forEach(card=>{
-const text = card.innerText.toLowerCase()
+if(termo.length < 2){
+songs.innerHTML = ""
+return
+}
 
-card.style.display = text.includes(value) ? "block" : "none"
+const resposta = await fetch(`/buscar?q=${encodeURIComponent(termo)}`)
+const resultados = await resposta.json()
+
+songs.innerHTML = ""
+
+resultados.forEach(m => {
+
+const card = document.createElement("div")
+card.className = "card"
+
+card.innerHTML = `
+<div class="artista">${m.artista}</div>
+<div class="musica">${m.musica}</div>
+${m.observacao ? `<div class="observacao">${m.observacao}</div>` : ""}
+`
+
+songs.appendChild(card)
 
 })
 
-})
-
-const logo=document.getElementById("logo")
-
-window.addEventListener("scroll",()=>{
-let opacity=1-window.scrollY/200
-logo.style.opacity=opacity>0?opacity:0
 })
 
 </script>

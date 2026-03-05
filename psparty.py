@@ -12,7 +12,7 @@ def carregar_musicas():
     return musicas
 
 # carrega as músicas quando o servidor inicia
-TODAS_MUSICAS = carregar_musicas()
+TODAS_MUSICAS = sorted(carregar_musicas(), key=lambda m: m["musica"].lower())
 
 @app.route("/")
 def home():

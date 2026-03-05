@@ -13,9 +13,17 @@ def carregar_musicas():
     return musicas
 
 def chave_ordenacao(m):
-    nome = m.get("musica", "").lower()
-    nome = re.sub(r'^[^a-z]+', '', nome)
-    return nome
+
+    nome = m.get("musica", "").lower().strip()
+
+    if nome and nome[0].isdigit():
+        prioridade = 0
+    else:
+        prioridade = 1
+
+    nome = re.sub(r'^(a |an )', '', nome)
+
+    return (prioridade, nome)
 
 TODAS_MUSICAS = sorted(carregar_musicas(), key=chave_ordenacao)
 

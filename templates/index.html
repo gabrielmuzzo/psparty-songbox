@@ -116,6 +116,7 @@ font-weight:bold;
 
 <div class="filtros">
 
+<button class="filtro-btn" onclick="mostrarTodos()">Todos</button>
 <button class="filtro-btn" onclick="aplicarFiltro('brasil')">Brasil</button>
 <button class="filtro-btn" onclick="aplicarFiltro('kpop')">Kpop</button>
 <button class="filtro-btn" onclick="aplicarFiltro('jrock')">Jrock</button>
@@ -123,7 +124,7 @@ font-weight:bold;
 
 </div>
 
-<img src="{{ url_for('static', filename='logo.png') }}" class="logo" id="logo">
+<img src="{{ url_for('static', filename='logo.png') }}" class="logo">
 
 <input type="text" id="search" placeholder="Pesquisar artista, música ou anime..." autofocus>
 
@@ -185,6 +186,13 @@ card.style.display = text.includes(value) ? "block" : "none"
 function aplicarFiltro(palavra){
 
 search.value = palavra
+search.dispatchEvent(new Event("input"))
+
+}
+
+function mostrarTodos(){
+
+search.value = ""
 search.dispatchEvent(new Event("input"))
 
 }

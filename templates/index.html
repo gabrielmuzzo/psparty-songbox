@@ -97,7 +97,13 @@ color:#bbb;
 <div class="musica">{{ m.musica }}</div>
 
 {% if m.observacao %}
+
+{% if "sem bateria" in m.observacao.lower() %}
+<div class="observacao sem-bateria">{{ m.observacao }}</div>
+{% else %}
 <div class="observacao">{{ m.observacao }}</div>
+{% endif %}
+
 {% endif %}
 
 </div>

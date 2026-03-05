@@ -42,6 +42,25 @@ display:block;
 transition:opacity .4s;
 }
 
+.filtros{
+margin-bottom:10px;
+}
+
+.filtro-btn{
+background:#1e1e1e;
+color:#fff;
+border:1px solid #333;
+padding:6px 12px;
+margin:4px;
+border-radius:12px;
+font-size:13px;
+cursor:pointer;
+}
+
+.filtro-btn:hover{
+background:#008cff;
+}
+
 input{
 width:90%;
 padding:14px;
@@ -95,9 +114,18 @@ font-weight:bold;
 
 <div class="container">
 
+<div class="filtros">
+
+<button class="filtro-btn" onclick="aplicarFiltro('brasil')">Brasil</button>
+<button class="filtro-btn" onclick="aplicarFiltro('kpop')">Kpop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('jrock')">Jrock</button>
+<button class="filtro-btn" onclick="aplicarFiltro('anime')">Anime</button>
+
+</div>
+
 <img src="{{ url_for('static', filename='logo.png') }}" class="logo" id="logo">
 
-<input type="text" id="search" placeholder="Pesquisar artista, música ou anime (também Jrock, Kpop ou Brasil)" autofocus>
+<input type="text" id="search" placeholder="Pesquisar artista, música ou anime..." autofocus>
 
 <div id="songs">
 
@@ -107,7 +135,6 @@ font-weight:bold;
 
 <div class="musica">{{ m.musica }}</div>
 <div class="artista">{{ m.artista }}</div>
-
 
 {% if m.observacao %}
 
@@ -154,6 +181,13 @@ card.style.display = text.includes(value) ? "block" : "none"
 })
 
 })
+
+function aplicarFiltro(palavra){
+
+search.value = palavra
+search.dispatchEvent(new Event("input"))
+
+}
 
 </script>
 

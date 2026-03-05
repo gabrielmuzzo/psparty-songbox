@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 import csv
+import re
 
 app = Flask(__name__)
 
@@ -11,8 +12,12 @@ def carregar_musicas():
             musicas.append(row)
     return musicas
 
-# carrega as músicas quando o servidor inicia
-TODAS_MUSICAS = sorted(carregar_musicas(), key=lambda m: m.get("musica","").lower())
+def chave_ordenacao(m):
+    nome = m.get("musica", "").lower()
+    nome = re.sub(r'^[^a-z]+', '', nome)
+    return nome
+
+TODAS_MUSICAS = sorted(carregar_musicas(), key=chave_ordenacao)
 
 @app.route("/")
 def home():

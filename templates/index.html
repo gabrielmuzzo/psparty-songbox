@@ -56,7 +56,7 @@ background:#1e1e1e;
 padding:15px;
 margin-bottom:10px;
 border-radius:10px;
-border-left:4px solid #0077ff;
+border-left:4px solid #ff3c3c;
 }
 
 .artista{
@@ -87,41 +87,40 @@ color:#bbb;
 
 <input type="text" id="search" placeholder="Pesquisar artista ou música..." autofocus>
 
-<div id="songs"></div>
+<div id="songs">
+
+{% for m in musicas %}
+
+<div class="card">
+
+<div class="artista">{{ m.artista }}</div>
+<div class="musica">{{ m.musica }}</div>
+
+{% if m.observacao %}
+<div class="observacao">{{ m.observacao }}</div>
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
 
 </div>
 
 <script>
 
 const search = document.getElementById("search")
-const songs = document.getElementById("songs")
+const cards = document.querySelectorAll(".card")
 
-search.addEventListener("input", async function(){
+search.addEventListener("input",function(){
 
-const termo = this.value
+const value = this.value.toLowerCase()
 
-if(termo.length < 2){
-songs.innerHTML = ""
-return
-}
+cards.forEach(card=>{
+const text = card.innerText.toLowerCase()
 
-const resposta = await fetch(`/buscar?q=${encodeURIComponent(termo)}`)
-const resultados = await resposta.json()
-
-songs.innerHTML = ""
-
-resultados.forEach(m => {
-
-const card = document.createElement("div")
-card.className = "card"
-
-card.innerHTML = `
-<div class="artista">${m.artista}</div>
-<div class="musica">${m.musica}</div>
-${m.observacao ? `<div class="observacao">${m.observacao}</div>` : ""}
-`
-
-songs.appendChild(card)
+card.style.display = text.includes(value) ? "block" : "none"
 
 })
 

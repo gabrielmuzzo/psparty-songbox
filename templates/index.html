@@ -136,7 +136,8 @@ color:#bbb;
 /* destaque */
 
 .sem-bateria,
-.sem-letra{
+.sem-letra,
+.sem-guitarra{
 color:#ff9a00;
 font-weight:bold;
 }
@@ -173,6 +174,9 @@ animation:flutuar 18s ease-in-out infinite;
 <button class="filtro-btn" onclick="aplicarFiltro('pop')">Pop</button>
 <button class="filtro-btn" onclick="aplicarFiltro('50s-80s')">50s-80s</button>
 <button class="filtro-btn" onclick="aplicarFiltro('soundtrack')">Soundtracks</button>
+<button class="filtro-btn" onclick="aplicarFiltro('indie')">Indie</button>
+<button class="filtro-btn" onclick="aplicarFiltro('rock')">Rock</button>
+<button class="filtro-btn" onclick="aplicarFiltro('metal')">Metal</button>
 
 </div>
 
@@ -200,6 +204,9 @@ animation:flutuar 18s ease-in-out infinite;
 | replace("Sem letra", '<span class="sem-letra">Sem letra</span>')
 | replace("sem letra", '<span class="sem-letra">sem letra</span>')
 | replace("SEM LETRA", '<span class="sem-letra">SEM LETRA</span>')
+| replace("Sem letra", '<span class="sem-guitarra">Sem guitarra</span>')
+| replace("sem letra", '<span class="sem-guitarra">sem guitarra</span>')
+| replace("SEM LETRA", '<span class="sem-guitarra">SEM GUITARRA</span>')
 | safe }}
 
 </div>

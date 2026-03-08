@@ -149,23 +149,34 @@ top:0;
 left:0;
 width:100%;
 height:100%;
+
 display:flex;
 justify-content:center;
 align-items:center;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(10px);
+
+/* escurece levemente o fundo */
+background:rgba(0,0,0,0.35);
+
+/* blur no fundo */
+backdrop-filter:blur(6px);
+-webkit-backdrop-filter:blur(6px);
+
 z-index:5000;
 }
 
 .popup-box{
-background:rgba(20,20,20,0.65);
-backdrop-filter:blur(18px);
+background:#111; /* sólido, sem blur */
+
 border:1px solid rgba(255,255,255,0.15);
+
 padding:40px;
 border-radius:18px;
+
 text-align:center;
 max-width:420px;
+
 box-shadow:0 25px 70px rgba(0,0,0,0.8);
+
 animation:popupEntrada .35s ease;
 }
 
@@ -188,57 +199,34 @@ margin-bottom:25px;
 }
 
 .popup-insta{
-
 display:inline-block;
-
 padding:14px 26px;
-
 border-radius:30px;
-
 font-weight:bold;
-
 background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);
-
 color:white;
-
 text-decoration:none;
-
 margin-bottom:15px;
-
 transition:.2s;
-
 }
 
 .popup-insta:hover{
-
 transform:scale(1.08);
-
 }
 
 .popup-btn{
-
 display:block;
-
 margin:15px auto 0 auto;
-
 padding:10px 22px;
-
 border:none;
-
 border-radius:30px;
-
 background:#008cff;
-
 color:white;
-
 cursor:pointer;
-
 }
 
 .popup-btn:hover{
-
 background:#2aa3ff;
-
 }
 
 @keyframes popupEntrada{
@@ -257,8 +245,6 @@ to{opacity:1;transform:scale(1);}
 
 <body>
 
-<!-- POPUP -->
-
 <div id="popup" class="popup-overlay">
 
 <div class="popup-box">
@@ -272,18 +258,18 @@ Sugira músicas 🎶
 </div>
 
 <div class="popup-text">
-Deixe sua sugestão de músicas no nosso Instagram.<br>
-As melhores podem entrar na lista do evento 😄
+Deixe sua sugestão de músicas no nosso Instagram 😄
 </div>
 
 <a class="popup-insta" href="https://instagram.com/pspartyoficial" target="_blank">
 Ir para o Instagram
 </a>
 
-<button id="popupBtn" class="popup-btn"></button>
+<button id="popupBtn" class="popup-btn">
+Seguir para a lista de músicas
+</button>
 
 </div>
-
 </div>
 
 <div class="top-bar">
@@ -292,48 +278,103 @@ Ir para o Instagram
 
 <div class="container">
 
-<!-- resto do seu site continua igual -->
+<div class="filtros">
+
+<button class="filtro-btn" onclick="mostrarTodos()">Todos</button>
+<button class="filtro-btn" onclick="aplicarFiltro('brasil')">Brasil</button>
+<button class="filtro-btn" onclick="aplicarFiltro('kpop')">K-pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('jrock')">J-rock</button>
+<button class="filtro-btn" onclick="aplicarFiltro('jpop')">J-pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('anime')">Anime</button>
+<button class="filtro-btn" onclick="aplicarFiltro('pop')">Pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('50s-80s')">50s-80s</button>
+<button class="filtro-btn" onclick="aplicarFiltro('soundtrack')">Soundtracks</button>
+<button class="filtro-btn" onclick="aplicarFiltro('indie')">Indie</button>
+<button class="filtro-btn" onclick="aplicarFiltro('rock')">Rock</button>
+<button class="filtro-btn" onclick="aplicarFiltro('metal')">Metal</button>
+<button class="filtro-btn" onclick="aplicarFiltro('vocaloid')">Vocaloid</button>
+
+</div>
+
+<img src="{{ url_for('static', filename='logo.png') }}" class="logo">
+
+<input type="text" id="search" placeholder="Pesquisar artista, música ou anime..." autofocus>
+
+<div id="songs">
+
+{% for m in musicas %}
+
+<div class="card" data-tag="{{ m.tag }}">
+
+<div class="musica">{{ m.musica }}</div>
+<div class="artista">{{ m.artista }}</div>
+
+{% if m.observacao %}
+
+<div class="observacao">
+
+{{ m.observacao
+| replace("Sem bateria", '<span class="sem-bateria">Sem bateria</span>')
+| replace("Sem guitarra", '<span class="sem-guitarra">Sem guitarra</span>')
+| replace("Sem letra", '<span class="sem-letra">Sem letra</span>')
+| safe }}
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
 
 </div>
 
 <script>
 
-const mensagens=[
-"Entendi",
-"Tá, não enche.",
-"Saquei",
-"Não precisa falar duas vezes",
-"Estou ciente",
-"Beleza 👍",
-"Compreensível",
-"Ir para a lista de músicas",
-"A mensagem que era pra aparecer aqui bugou",
-"Tô sabendo",
-"Já vi já",
-"Li por osmose",
-"Skip cutscene",
-"Sem pop-up por favor",
-"Pode deixar",
-"Nem li mas concordo",
-"Informação absorvida",
-"Quando eu perguntar tu fala",
-"Ok Google",
-"Tá cala a boca",
-"Confirmado pelo especialista",
-"Eu finjo que li",
-"Agora eu sei",
-"Era pra ler?",
-"Conhecimento desbloqueado",
-"Nem li nem lerei",
-"OK"
-]
-
-const botaoPopup=document.getElementById("popupBtn")
-
-botaoPopup.innerText=mensagens[Math.floor(Math.random()*mensagens.length)]
-
-botaoPopup.onclick=function(){
+document.getElementById("popupBtn").onclick=function(){
 document.getElementById("popup").style.display="none"
+}
+
+const search=document.getElementById("search")
+
+function normalizar(texto){
+return texto.toLowerCase().replace(/-/g,"").trim()
+}
+
+function extrairTags(tagString){
+return normalizar(tagString).split(/\s+/).filter(t => t.length>0)
+}
+
+search.addEventListener("input",function(){
+
+const value=normalizar(this.value)
+
+document.querySelectorAll(".card").forEach(card=>{
+
+const text=normalizar(card.innerText)
+const tags=extrairTags(card.dataset.tag||"")
+
+let mostrar=false
+
+if(text.includes(value))mostrar=true
+if(tags.includes(value))mostrar=true
+
+card.style.display=mostrar?"block":"none"
+
+})
+
+})
+
+function aplicarFiltro(palavra){
+search.value=palavra
+search.dispatchEvent(new Event("input"))
+}
+
+function mostrarTodos(){
+search.value=""
+search.dispatchEvent(new Event("input"))
 }
 
 </script>

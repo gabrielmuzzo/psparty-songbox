@@ -35,6 +35,7 @@ color:rgba(255,255,255,0.04);
 transform:rotate(-20deg);
 pointer-events:none;
 z-index:0;
+animation:flutuar 18s ease-in-out infinite;
 }
 
 .top-bar{
@@ -133,13 +134,94 @@ font-size:13px;
 color:#bbb;
 }
 
-/* destaque */
-
 .sem-bateria,
 .sem-letra,
 .sem-guitarra{
 color:#ff9a00;
 font-weight:bold;
+}
+
+/* POPUP */
+
+.popup-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,0.55);
+backdrop-filter:blur(8px);
+z-index:5000;
+}
+
+.popup-box{
+background:rgba(20,20,20,0.55);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.15);
+padding:40px;
+border-radius:18px;
+text-align:center;
+max-width:420px;
+box-shadow:0 25px 70px rgba(0,0,0,0.8);
+animation:popupEntrada .35s ease;
+}
+
+.popup-icones{
+font-size:32px;
+letter-spacing:12px;
+margin-bottom:10px;
+color:#008cff;
+animation:iconesFlutuando 6s ease-in-out infinite;
+}
+
+.popup-title{
+font-size:24px;
+margin-bottom:10px;
+}
+
+.popup-text{
+color:#ccc;
+line-height:1.5;
+}
+
+.popup-btn{
+margin-top:25px;
+padding:12px 26px;
+border:none;
+border-radius:30px;
+background:#008cff;
+color:white;
+font-size:15px;
+cursor:pointer;
+animation:tremor .45s ease;
+}
+
+.popup-btn:hover{
+background:#2aa3ff;
+transform:scale(1.07);
+}
+
+@keyframes popupEntrada{
+from{opacity:0;transform:scale(.85);}
+to{opacity:1;transform:scale(1);}
+}
+
+@keyframes iconesFlutuando{
+0%{transform:translateY(0px)}
+50%{transform:translateY(-6px)}
+100%{transform:translateY(0px)}
+}
+
+@keyframes tremor{
+0%{transform:translateX(0)}
+20%{transform:translateX(-3px)}
+40%{transform:translateX(3px)}
+60%{transform:translateX(-3px)}
+80%{transform:translateX(3px)}
+100%{transform:translateX(0)}
 }
 
 @keyframes flutuar{
@@ -148,14 +230,36 @@ font-weight:bold;
 100%{transform:rotate(-20deg) translateY(0px);}
 }
 
-body::before{
-animation:flutuar 18s ease-in-out infinite;
-}
-
 </style>
 </head>
 
 <body>
+
+<!-- POPUP -->
+
+<div id="popup" class="popup-overlay">
+
+<div class="popup-box">
+
+<div class="popup-icones">
+△ ○ ✕ □
+</div>
+
+<div class="popup-title">
+Aviso
+</div>
+
+<div class="popup-text">
+Segue a gente no Instagram depois 😄<br><br>
+Nem todas as músicas estão separadas por gênero.<br>
+Considere também usar a barra de pesquisa.
+</div>
+
+<button id="popupBtn" class="popup-btn"></button>
+
+</div>
+
+</div>
 
 <div class="top-bar">
 🎸 {{ total_banco }} músicas disponíveis
@@ -202,11 +306,9 @@ animation:flutuar 18s ease-in-out infinite;
 | replace("Sem bateria", '<span class="sem-bateria">Sem bateria</span>')
 | replace("sem bateria", '<span class="sem-bateria">sem bateria</span>')
 | replace("SEM BATERIA", '<span class="sem-bateria">SEM BATERIA</span>')
-
 | replace("Sem guitarra", '<span class="sem-guitarra">Sem guitarra</span>')
 | replace("sem guitarra", '<span class="sem-guitarra">sem guitarra</span>')
 | replace("SEM GUITARRA", '<span class="sem-guitarra">SEM GUITARRA</span>')
-
 | replace("Sem letra", '<span class="sem-letra">Sem letra</span>')
 | replace("sem letra", '<span class="sem-letra">sem letra</span>')
 | replace("SEM LETRA", '<span class="sem-letra">SEM LETRA</span>')
@@ -226,55 +328,79 @@ animation:flutuar 18s ease-in-out infinite;
 
 <script>
 
-const search = document.getElementById("search")
+const mensagens=[
+"Entendi",
+"Tá, não enche.",
+"Saquei",
+"Não precisa falar duas vezes",
+"Estou ciente",
+"Beleza 👍",
+"Compreensível",
+"Tô sabendo",
+"Já vi já",
+"Li por osmose",
+"Skip cutscene",
+"Sem pop-up por favor",
+"Pode deixar",
+"Nem li mas concordo",
+"Informação absorvida",
+"Quando eu perguntar tu fala",
+"Ok Google",
+"Tá cala a boca",
+"Confirmado pelo especialista",
+"Eu finjo que li",
+"Agora eu sei",
+"É pra ler?",
+"Conhecimento desbloqueado",
+"Nem li nem lerei",
+"ok"
+]
+
+const botaoPopup=document.getElementById("popupBtn")
+
+botaoPopup.innerText=mensagens[Math.floor(Math.random()*mensagens.length)]
+
+botaoPopup.onclick=function(){
+document.getElementById("popup").style.display="none"
+}
+
+const search=document.getElementById("search")
 
 function normalizar(texto){
-return texto
-.toLowerCase()
-.replace(/-/g,"")
-.trim()
+return texto.toLowerCase().replace(/-/g,"").trim()
 }
 
 function extrairTags(tagString){
-
-return normalizar(tagString)
-.split(/\s+/)
-.filter(t => t.length > 0)
-
+return normalizar(tagString).split(/\s+/).filter(t=>t.length>0)
 }
 
-search.addEventListener("input", function(){
+search.addEventListener("input",function(){
 
-const value = normalizar(this.value)
+const value=normalizar(this.value)
 
-document.querySelectorAll(".card").forEach(card => {
+document.querySelectorAll(".card").forEach(card=>{
 
-const text = normalizar(card.innerText)
-const tags = extrairTags(card.dataset.tag || "")
+const text=normalizar(card.innerText)
+const tags=extrairTags(card.dataset.tag||"")
 
-let mostrar = false
+let mostrar=false
 
-if(text.includes(value)){
-mostrar = true
-}
+if(text.includes(value))mostrar=true
+if(tags.includes(value))mostrar=true
 
-if(tags.includes(value)){
-mostrar = true
-}
-
-card.style.display = mostrar ? "block" : "none"
+card.style.display=mostrar?"block":"none"
 
 })
 
 })
 
 function aplicarFiltro(palavra){
-search.value = palavra
+search.value=palavra
 search.dispatchEvent(new Event("input"))
 }
 
 function mostrarTodos(){
-search.value = ""
+search.value=""
 search.dispatchEvent(new Event("input"))
 }
 

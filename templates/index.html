@@ -271,20 +271,20 @@ Seguir para a lista de músicas
 
 <div class="filtros">
 
-<button class="filtro-btn destaque" onclick="aplicarFiltro('hit')">🔥 Mais Tocadas</button>
-<button class="filtro-btn" onclick="mostrarTodos()">Todos</button>
-<button class="filtro-btn" onclick="aplicarFiltro('brasil')">Brasil</button>
-<button class="filtro-btn" onclick="aplicarFiltro('kpop')">K-pop</button>
-<button class="filtro-btn" onclick="aplicarFiltro('jrock')">J-rock</button>
-<button class="filtro-btn" onclick="aplicarFiltro('jpop')">J-pop</button>
-<button class="filtro-btn" onclick="aplicarFiltro('anime')">Anime</button>
-<button class="filtro-btn" onclick="aplicarFiltro('pop')">Pop</button>
-<button class="filtro-btn" onclick="aplicarFiltro('50s-80s')">50s-80s</button>
-<button class="filtro-btn" onclick="aplicarFiltro('soundtrack')">Soundtracks</button>
-<button class="filtro-btn" onclick="aplicarFiltro('indie')">Indie</button>
-<button class="filtro-btn" onclick="aplicarFiltro('rock')">Rock</button>
-<button class="filtro-btn" onclick="aplicarFiltro('metal')">Metal</button>
-<button class="filtro-btn" onclick="aplicarFiltro('vocaloid')">Vocaloid</button>
+<button class="filtro-btn destaque" onclick="destacarBotao(this); aplicarFiltro('hit')">🔥 Mais Tocadas</button>
+<button class="filtro-btn" onclick="destacarBotao(this); mostrarTodos()">Todos</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('brasil')">Brasil</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('kpop')">K-pop</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('jrock')">J-rock</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('jpop')">J-pop</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('anime')">Anime</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('pop')">Pop</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('50s-80s')">50s-80s</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('soundtrack')">Soundtracks</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('indie')">Indie</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('rock')">Rock</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('metal')">Metal</button>
+<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('vocaloid')">Vocaloid</button>
 
 </div>
 
@@ -332,6 +332,13 @@ data-search="{{ (m.musica ~ ' ' ~ m.artista ~ ' ' ~ (m.observacao or '')) | lowe
 
 document.getElementById("popupBtn").onclick=function(){
 document.getElementById("popup").style.display="none"
+}
+
+function destacarBotao(botao){
+document.querySelectorAll(".filtro-btn").forEach(btn=>{
+btn.classList.remove("destaque")
+})
+botao.classList.add("destaque")
 }
 
 const search=document.getElementById("search")

@@ -293,8 +293,11 @@ data-search="{{ (m.musica ~ ' ' ~ m.artista ~ ' ' ~ (m.observacao or '')) | lowe
 
 {{ m.observacao
 | replace("Sem bateria", '<span class="sem-bateria">Sem bateria</span>')
-| replace("Sem guitarra", '<span class="sem-guitarra">Sem guitarra</span>')
+| replace("sem bateria", '<span class="sem-bateria">sem bateria</span>')
+| replace("SEM BATERIA", '<span class="sem-bateria">SEM BATERIA</span>')
 | replace("Sem letra", '<span class="sem-letra">Sem letra</span>')
+| replace("sem letra", '<span class="sem-letra">sem letra</span>')
+| replace("SEM LETRA", '<span class="sem-letra">SEM LETRA</span>')
 | safe }}
 
 </div>

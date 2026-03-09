@@ -99,6 +99,11 @@ border-color:#008cff;
 transform:translateY(-1px);
 }
 
+.filtro-btn.destaque{
+background:#008cff;
+border-color:#008cff;
+}
+
 input{
 width:90%;
 padding:14px;
@@ -242,6 +247,7 @@ to{opacity:1;transform:scale(1);}
 
 <div id="popup" class="popup-overlay">
 <div class="popup-box">
+
 <div class="popup-icones">△ ○ ✕ □</div>
 <div class="popup-title">Sugira músicas 🎶</div>
 <div class="popup-text">Deixe sua sugestão de músicas no nosso Instagram 😄</div>
@@ -265,6 +271,7 @@ Seguir para a lista de músicas
 
 <div class="filtros">
 
+<button class="filtro-btn destaque" onclick="aplicarFiltro('hit')">🔥 Mais Tocadas</button>
 <button class="filtro-btn" onclick="mostrarTodos()">Todos</button>
 <button class="filtro-btn" onclick="aplicarFiltro('brasil')">Brasil</button>
 <button class="filtro-btn" onclick="aplicarFiltro('kpop')">K-pop</button>
@@ -355,8 +362,12 @@ const tags=extrairTags(card.dataset.tag||"")
 
 let mostrar=false
 
+if(value===""){
+mostrar=true
+}else{
 if(text.includes(value))mostrar=true
 if(tags.includes(value))mostrar=true
+}
 
 card.style.display=mostrar?"block":"none"
 
@@ -374,6 +385,10 @@ search.dispatchEvent(new Event("input"))
 function mostrarTodos(){
 search.value=""
 search.dispatchEvent(new Event("input"))
+}
+
+window.onload=function(){
+aplicarFiltro("hit")
 }
 
 </script>

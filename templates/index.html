@@ -271,20 +271,20 @@ Seguir para a lista de músicas
 
 <div class="filtros">
 
-<button class="filtro-btn destaque" onclick="destacarBotao(this); aplicarFiltro('hit')">🔥 Mais Tocadas</button>
-<button class="filtro-btn" onclick="destacarBotao(this); mostrarTodos()">Todos</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('brasil')">Brasil</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('kpop')">K-pop</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('jrock')">J-rock</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('jpop')">J-pop</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('anime')">Anime</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('pop')">Pop</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('50s-80s')">50s-80s</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('soundtrack')">Soundtracks</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('indie')">Indie</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('rock')">Rock</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('metal')">Metal</button>
-<button class="filtro-btn" onclick="destacarBotao(this); aplicarFiltro('vocaloid')">Vocaloid</button>
+<button class="filtro-btn destaque" onclick="aplicarFiltro('hit', this)">🔥 Mais Tocadas</button>
+<button class="filtro-btn" onclick="aplicarFiltro('', this)">Todos</button>
+<button class="filtro-btn" onclick="aplicarFiltro('brasil', this)">Brasil</button>
+<button class="filtro-btn" onclick="aplicarFiltro('kpop', this)">K-pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('jrock', this)">J-rock</button>
+<button class="filtro-btn" onclick="aplicarFiltro('jpop', this)">J-pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('anime', this)">Anime</button>
+<button class="filtro-btn" onclick="aplicarFiltro('pop', this)">Pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('50s-80s', this)">50s-80s</button>
+<button class="filtro-btn" onclick="aplicarFiltro('soundtrack', this)">Soundtracks</button>
+<button class="filtro-btn" onclick="aplicarFiltro('indie', this)">Indie</button>
+<button class="filtro-btn" onclick="aplicarFiltro('rock', this)">Rock</button>
+<button class="filtro-btn" onclick="aplicarFiltro('metal', this)">Metal</button>
+<button class="filtro-btn" onclick="aplicarFiltro('vocaloid', this)">Vocaloid</button>
 
 </div>
 
@@ -334,13 +334,6 @@ document.getElementById("popupBtn").onclick=function(){
 document.getElementById("popup").style.display="none"
 }
 
-function destacarBotao(botao){
-document.querySelectorAll(".filtro-btn").forEach(btn=>{
-btn.classList.remove("destaque")
-})
-botao.classList.add("destaque")
-}
-
 const search=document.getElementById("search")
 const cards=document.querySelectorAll(".card")
 
@@ -350,6 +343,21 @@ return texto.toLowerCase().replace(/-/g,"").trim()
 
 function extrairTags(tagString){
 return normalizar(tagString).split(/\s+/).filter(t => t.length>0)
+}
+
+function aplicarFiltro(palavra, botao){
+
+document.querySelectorAll(".filtro-btn").forEach(btn=>{
+btn.classList.remove("destaque")
+})
+
+if(botao){
+botao.classList.add("destaque")
+}
+
+search.value=palavra
+search.dispatchEvent(new Event("input"))
+
 }
 
 let debounceTimer
@@ -386,18 +394,8 @@ card.style.display=mostrar?"block":"none"
 
 })
 
-function aplicarFiltro(palavra){
-search.value=palavra
-search.dispatchEvent(new Event("input"))
-}
-
-function mostrarTodos(){
-search.value=""
-search.dispatchEvent(new Event("input"))
-}
-
 window.onload=function(){
-aplicarFiltro("hit")
+aplicarFiltro("hit", document.querySelector(".filtro-btn"))
 }
 
 </script>

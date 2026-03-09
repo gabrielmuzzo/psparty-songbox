@@ -364,9 +364,11 @@ let mostrar=false
 
 if(value===""){
 mostrar=true
+}else if(value==="hit"){
+if(tags.includes("hit")) mostrar=true
 }else{
-if(text.includes(value))mostrar=true
-if(tags.includes(value))mostrar=true
+if(text.includes(value)) mostrar=true
+if(tags.includes(value)) mostrar=true
 }
 
 card.style.display=mostrar?"block":"none"

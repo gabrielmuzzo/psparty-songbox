@@ -31,11 +31,16 @@ width:200%;
 height:200%;
 font-size:120px;
 letter-spacing:40px;
-color:rgba(255,255,255,0.04);
+color:rgba(255,255,255,0.06);
 transform:rotate(-20deg);
 pointer-events:none;
 z-index:0;
 animation:flutuar 18s ease-in-out infinite;
+
+text-shadow:
+0 0 10px rgba(0,140,255,0.15),
+0 0 25px rgba(0,140,255,0.1),
+0 0 50px rgba(0,140,255,0.05);
 }
 
 .top-bar{
@@ -53,10 +58,10 @@ color:#e0e0e0;
 }
 
 .container{
-max-width:620px;
+max-width:600px;
 margin:auto;
-margin-top:70px;
-padding:25px;
+margin-top:60px;
+padding:20px;
 text-align:center;
 position:relative;
 z-index:1;
@@ -66,7 +71,10 @@ z-index:1;
 width:140px;
 margin:10px auto 20px auto;
 display:block;
-filter:drop-shadow(0 5px 15px rgba(0,140,255,0.35));
+filter:
+drop-shadow(0 0 6px rgba(0,140,255,0.6))
+drop-shadow(0 0 18px rgba(0,140,255,0.35))
+drop-shadow(0 0 35px rgba(0,140,255,0.2));
 }
 
 .filtros{
@@ -74,42 +82,34 @@ margin-bottom:10px;
 }
 
 .filtro-btn{
-background:rgba(255,255,255,0.04);
-color:#ddd;
-border:1px solid rgba(255,255,255,0.12);
-padding:7px 14px;
+background:rgba(255,255,255,0.05);
+color:white;
+border:1px solid rgba(255,255,255,0.15);
+padding:6px 12px;
 margin:4px;
 border-radius:20px;
 font-size:13px;
 cursor:pointer;
-transition:.15s;
+transition:all .15s;
 }
 
 .filtro-btn:hover{
 background:#008cff;
-color:white;
 border-color:#008cff;
-transform:translateY(-2px);
-box-shadow:0 4px 10px rgba(0,140,255,0.4);
+transform:translateY(-1px);
 }
 
 input{
 width:90%;
-padding:14px 18px;
+padding:14px;
 border-radius:25px;
-border:1px solid rgba(255,255,255,0.08);
+border:none;
 font-size:16px;
-background:#1a1a1a;
+background:#1b1b1b;
 color:white;
 outline:none;
-box-shadow:0 6px 25px rgba(0,0,0,0.6);
+box-shadow:0 4px 15px rgba(0,0,0,0.6);
 margin-bottom:20px;
-transition:.15s;
-}
-
-input:focus{
-border-color:#008cff;
-box-shadow:0 0 0 2px rgba(0,140,255,0.25);
 }
 
 .card{
@@ -120,37 +120,27 @@ border-radius:12px;
 border-left:4px solid #008cff;
 backdrop-filter:blur(6px);
 box-shadow:0 6px 20px rgba(0,0,0,0.6);
-transition:all .2s;
-opacity:0;
-transform:translateY(10px);
-}
-
-.card.show{
-opacity:1;
-transform:translateY(0);
+transition:all .15s;
 }
 
 .card:hover{
-transform:scale(1.03);
-box-shadow:0 0 15px rgba(0,140,255,0.4),
-0 0 30px rgba(0,140,255,0.25);
+transform:scale(1.02);
+box-shadow:0 10px 30px rgba(0,140,255,0.3);
 }
 
 .musica{
-font-weight:700;
-font-size:18px;
-margin-bottom:2px;
+font-weight:bold;
+font-size:17px;
 }
 
 .artista{
 font-size:14px;
-color:#dcdcdc;
-margin-bottom:6px;
+color:#fafafa;
 }
 
 .observacao{
 font-size:13px;
-color:#a9a9a9;
+color:#bbb;
 }
 
 .sem-bateria,
@@ -158,12 +148,6 @@ color:#a9a9a9;
 .sem-guitarra{
 color:#ff9a00;
 font-weight:bold;
-}
-
-#nenhuma{
-display:none;
-margin-top:20px;
-color:#aaa;
 }
 
 .popup-overlay{
@@ -269,11 +253,12 @@ Ir para o Instagram
 <button id="popupBtn" class="popup-btn">
 Seguir para a lista de músicas
 </button>
+
 </div>
 </div>
 
 <div class="top-bar">
-🎸 <span id="contador">{{ total_banco }}</span> músicas
+🎸 {{ total_banco }} músicas disponíveis
 </div>
 
 <div class="container">
@@ -312,17 +297,26 @@ data-search="{{ (m.musica ~ ' ' ~ m.artista ~ ' ' ~ (m.observacao or '')) | lowe
 <div class="artista">{{ m.artista }}</div>
 
 {% if m.observacao %}
-<div class="observacao">{{ m.observacao }}</div>
+
+<div class="observacao">
+
+{{ m.observacao
+| replace("Sem bateria", '<span class="sem-bateria">Sem bateria</span>')
+| replace("sem bateria", '<span class="sem-bateria">sem bateria</span>')
+| replace("SEM BATERIA", '<span class="sem-bateria">SEM BATERIA</span>')
+| replace("Sem letra", '<span class="sem-letra">Sem letra</span>')
+| replace("sem letra", '<span class="sem-letra">sem letra</span>')
+| replace("SEM LETRA", '<span class="sem-letra">SEM LETRA</span>')
+| safe }}
+
+</div>
+
 {% endif %}
 
 </div>
 
 {% endfor %}
 
-</div>
-
-<div id="nenhuma">
-Nenhuma música encontrada 🎵
 </div>
 
 </div>
@@ -335,8 +329,6 @@ document.getElementById("popup").style.display="none"
 
 const search=document.getElementById("search")
 const cards=document.querySelectorAll(".card")
-const contador=document.getElementById("contador")
-const nenhuma=document.getElementById("nenhuma")
 
 function normalizar(texto){
 return texto.toLowerCase().replace(/-/g,"").trim()
@@ -346,13 +338,17 @@ function extrairTags(tagString){
 return normalizar(tagString).split(/\s+/).filter(t => t.length>0)
 }
 
-function atualizarBusca(){
+let debounceTimer
+
+search.addEventListener("input",function(){
+
+clearTimeout(debounceTimer)
+
+debounceTimer=setTimeout(()=>{
 
 const value=normalizar(search.value)
 
-let encontrados=0
-
-cards.forEach((card,i)=>{
+cards.forEach(card=>{
 
 const text=card.dataset.search
 const tags=extrairTags(card.dataset.tag||"")
@@ -361,47 +357,23 @@ let mostrar=false
 
 if(text.includes(value))mostrar=true
 if(tags.includes(value))mostrar=true
-if(value==="")mostrar=true
 
-if(mostrar){
-
-card.style.display="block"
-
-setTimeout(()=>{
-card.classList.add("show")
-},i*15)
-
-encontrados++
-
-}else{
-
-card.style.display="none"
-card.classList.remove("show")
-
-}
+card.style.display=mostrar?"block":"none"
 
 })
 
-contador.innerText=encontrados
+},750)
 
-nenhuma.style.display=encontrados===0?"block":"none"
-
-}
-
-search.addEventListener("input",atualizarBusca)
+})
 
 function aplicarFiltro(palavra){
 search.value=palavra
-atualizarBusca()
+search.dispatchEvent(new Event("input"))
 }
 
 function mostrarTodos(){
 search.value=""
-atualizarBusca()
-}
-
-window.onload=()=>{
-atualizarBusca()
+search.dispatchEvent(new Event("input"))
 }
 
 </script>

@@ -30,6 +30,8 @@ linear-gradient(180deg,#0a0a0a,#000814,#000000);
 background-attachment:fixed;
 }
 
+/* símbolos Playstation no fundo */
+
 body::before{
 content:"△ ○ ✕ □   △ ○ ✕ □   △ ○ ✕ □";
 position:fixed;
@@ -44,36 +46,33 @@ transform:rotate(-20deg);
 pointer-events:none;
 z-index:0;
 animation:flutuar 18s ease-in-out infinite;
-
-text-shadow:
-0 0 10px rgba(0,140,255,0.15),
-0 0 25px rgba(0,140,255,0.1),
-0 0 50px rgba(0,140,255,0.05);
 }
 
-/* barra superior NÃO fixa */
+/* barra superior */
 
 .top-bar{
+position:fixed;
+top:0;
 width:100%;
 background:rgba(0,0,0,0.85);
 backdrop-filter:blur(10px);
 padding:10px;
 text-align:center;
 border-bottom:1px solid rgba(0,140,255,0.25);
+z-index:1000;
 
 font-size:16px;
 font-weight:500;
 letter-spacing:0.6px;
-
 color:#e8f4ff;
-
-text-shadow:
-0 0 6px rgba(0,140,255,0.35);
 }
+
+/* container */
 
 .container{
 max-width:600px;
 margin:auto;
+margin-top:40px;
 padding:20px;
 text-align:center;
 position:relative;
@@ -84,11 +83,9 @@ z-index:1;
 width:140px;
 margin:10px auto 20px auto;
 display:block;
-filter:
-drop-shadow(0 0 6px rgba(0,140,255,0.6))
-drop-shadow(0 0 18px rgba(0,140,255,0.35))
-drop-shadow(0 0 35px rgba(0,140,255,0.2));
 }
+
+/* filtros */
 
 .filtros{
 margin-bottom:10px;
@@ -107,19 +104,19 @@ border-radius:20px;
 font-size:13px;
 cursor:pointer;
 transition:all .15s;
-white-space:nowrap;
 }
 
 .filtro-btn:hover{
 background:#008cff;
 border-color:#008cff;
-transform:translateY(-1px);
 }
 
 .filtro-btn.destaque{
 background:#008cff;
 border-color:#008cff;
 }
+
+/* busca */
 
 input{
 width:100%;
@@ -134,30 +131,26 @@ box-shadow:0 4px 15px rgba(0,0,0,0.6);
 margin-bottom:20px;
 }
 
-/* CARDS */
+/* cards */
 
 .card{
 background:linear-gradient(145deg, rgba(30,30,30,0.85), rgba(15,15,15,0.9));
 padding:16px;
 margin-bottom:14px;
 border-radius:14px;
-
 border:1px solid rgba(0,140,255,0.25);
 
 backdrop-filter:blur(8px);
 
 box-shadow:
-0 6px 20px rgba(0,0,0,0.6),
-0 0 0px rgba(0,140,255,0);
+0 6px 20px rgba(0,0,0,0.6);
 
-transition:all .4s ease;
+transition:all .3s ease;
 
 position:relative;
 
-/* animação inicial */
-
 opacity:0;
-transform:translateY(30px) scale(.97);
+transform:translateY(25px) scale(.96);
 }
 
 .card.apareceu{
@@ -174,29 +167,29 @@ height:100%;
 width:4px;
 background:linear-gradient(180deg,#008cff,#00d4ff);
 border-radius:4px 0 0 4px;
-opacity:.9;
 }
+
+/* texto */
 
 .musica{
 font-weight:600;
 font-size:18px;
-letter-spacing:.4px;
 margin-bottom:2px;
 }
 
 .artista{
 font-size:14px;
 color:#e6e6e6;
-opacity:.9;
 margin-bottom:8px;
 }
 
 .observacao{
 font-size:12.5px;
 color:#9aa3ad;
-margin-top:2px;
-letter-spacing:.3px;
+margin-top:4px;
 }
+
+/* destaques */
 
 .sem-bateria,
 .sem-letra,
@@ -205,7 +198,7 @@ color:#ff9a00;
 font-weight:bold;
 }
 
-/* POPUP */
+/* popup */
 
 .popup-overlay{
 position:fixed;
@@ -228,8 +221,6 @@ padding:40px;
 border-radius:18px;
 text-align:center;
 max-width:420px;
-box-shadow:0 25px 70px rgba(0,0,0,0.8);
-animation:popupEntrada .35s ease;
 }
 
 .popup-icones{
@@ -259,11 +250,6 @@ background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);
 color:white;
 text-decoration:none;
 margin-bottom:15px;
-transition:.2s;
-}
-
-.popup-insta:hover{
-transform:scale(1.08);
 }
 
 .popup-btn{
@@ -275,15 +261,6 @@ border-radius:30px;
 background:#008cff;
 color:white;
 cursor:pointer;
-}
-
-.popup-btn:hover{
-background:#2aa3ff;
-}
-
-@keyframes popupEntrada{
-from{opacity:0;transform:scale(.85);}
-to{opacity:1;transform:scale(1);}
 }
 
 @keyframes flutuar{
@@ -321,7 +298,56 @@ Seguir para a lista de músicas
 
 <div class="container">
 
-<!-- resto do HTML continua igual -->
+<div class="filtros">
+
+<button class="filtro-btn destaque" onclick="aplicarFiltro('hit', this)">🔥 Mais Tocadas</button>
+<button class="filtro-btn" onclick="aplicarFiltro('', this)">Todos</button>
+<button class="filtro-btn" onclick="aplicarFiltro('brasil', this)">Brasil</button>
+<button class="filtro-btn" onclick="aplicarFiltro('kpop', this)">K-pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('jrock', this)">J-rock</button>
+<button class="filtro-btn" onclick="aplicarFiltro('jpop', this)">J-pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('anime', this)">Anime</button>
+<button class="filtro-btn" onclick="aplicarFiltro('pop', this)">Pop</button>
+<button class="filtro-btn" onclick="aplicarFiltro('rock', this)">Rock</button>
+<button class="filtro-btn" onclick="aplicarFiltro('metal', this)">Metal</button>
+
+</div>
+
+<img src="{{ url_for('static', filename='logo.png') }}" class="logo">
+
+<input type="text" id="search" placeholder="Pesquisar artista, música ou anime..." autofocus>
+
+<div id="songs">
+
+{% for m in musicas %}
+
+<div class="card"
+data-tag="{{ m.tag }}"
+data-search="{{ (m.musica ~ ' ' ~ m.artista ~ ' ' ~ (m.observacao or '')) | lower }}">
+
+<div class="musica">{{ m.musica }}</div>
+<div class="artista">{{ m.artista }}</div>
+
+{% if m.observacao %}
+
+<div class="observacao">
+
+{{ m.observacao
+| replace("Sem bateria", '<span class="sem-bateria">Sem bateria</span>')
+| replace("sem bateria", '<span class="sem-bateria">sem bateria</span>')
+| replace("Sem letra", '<span class="sem-letra">Sem letra</span>')
+| replace("sem letra", '<span class="sem-letra">sem letra</span>')
+| safe }}
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
 
 </div>
 
@@ -395,17 +421,13 @@ window.onload=function(){
 aplicarFiltro("hit", document.querySelector(".filtro-btn"))
 }
 
-/* animação ao aparecer no scroll */
-
 const observer = new IntersectionObserver((entries)=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting){
 entry.target.classList.add("apareceu")
 }
 })
-},{
-threshold:0.15
-})
+},{threshold:0.15})
 
 document.querySelectorAll(".card").forEach(card=>{
 observer.observe(card)

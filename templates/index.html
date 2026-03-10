@@ -11,6 +11,10 @@
 box-sizing:border-box;
 }
 
+html{
+background:#000814;
+}
+
 html,body{
 overflow-x:hidden;
 max-width:100%;
@@ -20,6 +24,7 @@ body{
 font-family:'Poppins',sans-serif;
 margin:0;
 color:white;
+min-height:100vh;
 
 background:
 radial-gradient(circle at 20% 20%, rgba(0,140,255,0.25), transparent 40%),
@@ -54,21 +59,16 @@ animation:flutuar 18s ease-in-out infinite;
 width:100%;
 background:rgba(0,0,0,0.85);
 backdrop-filter:blur(10px);
-
 padding:10px;
-
 text-align:center;
-
 border-bottom:1px solid rgba(0,140,255,0.25);
 
 font-size:16px;
 font-weight:500;
 letter-spacing:0.6px;
-
 color:#e8f4ff;
 
-text-shadow:
-0 0 6px rgba(0,140,255,0.35);
+text-shadow:0 0 6px rgba(0,140,255,0.35);
 }
 
 /* container */
@@ -145,11 +145,9 @@ border:1px solid rgba(0,140,255,0.25);
 
 backdrop-filter:blur(8px);
 
-box-shadow:
-0 6px 20px rgba(0,0,0,0.6);
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
 
 transition:all .3s ease;
-
 position:relative;
 
 opacity:0;
@@ -424,7 +422,7 @@ window.onload=function(){
 aplicarFiltro("hit", document.querySelector(".filtro-btn"))
 }
 
-const observer = new IntersectionObserver((entries)=>{
+const observer=new IntersectionObserver((entries)=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting){
 entry.target.classList.add("apareceu")

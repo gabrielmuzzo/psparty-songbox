@@ -131,29 +131,55 @@ margin-bottom:20px;
 }
 
 .card{
-background:rgba(30,30,30,0.85);
+background:linear-gradient(145deg, rgba(30,30,30,0.85), rgba(15,15,15,0.9));
 padding:16px;
-margin-bottom:12px;
-border-radius:12px;
-border-left:4px solid #008cff;
-backdrop-filter:blur(6px);
-box-shadow:0 6px 20px rgba(0,0,0,0.6);
-transition:all .15s;
+margin-bottom:14px;
+border-radius:14px;
+
+border:1px solid rgba(0,140,255,0.25);
+
+backdrop-filter:blur(8px);
+
+box-shadow:
+0 6px 20px rgba(0,0,0,0.6),
+0 0 0px rgba(0,140,255,0);
+
+transition:all .2s ease;
+
+position:relative;
+}
+
+.card::before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+height:100%;
+width:4px;
+background:linear-gradient(180deg,#008cff,#00d4ff);
+border-radius:4px 0 0 4px;
+opacity:.9;
 }
 
 .card:hover{
-transform:scale(1.02);
-box-shadow:0 10px 30px rgba(0,140,255,0.3);
+transform:translateY(-3px) scale(1.02);
+
+box-shadow:
+0 10px 35px rgba(0,0,0,0.7),
+0 0 20px rgba(0,140,255,0.25);
 }
 
 .musica{
-font-weight:bold;
-font-size:17px;
+font-weight:600;
+font-size:18px;
+letter-spacing:.4px;
+margin-bottom:3px;
 }
 
 .artista{
 font-size:14px;
-color:#fafafa;
+color:#dcdcdc;
+opacity:.85;
 }
 
 .observacao{

@@ -7,11 +7,16 @@
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
 font-family:'Poppins',sans-serif;
 margin:0;
 color:white;
 overflow-x:hidden;
+max-width:100vw;
 
 background:
 radial-gradient(circle at 20% 20%, rgba(0,140,255,0.25), transparent 40%),
@@ -27,8 +32,8 @@ content:"△ ○ ✕ □   △ ○ ✕ □   △ ○ ✕ □";
 position:fixed;
 top:0;
 left:0;
-width:200%;
-height:200%;
+width:100vw;
+height:100vh;
 font-size:120px;
 letter-spacing:40px;
 color:rgba(255,255,255,0.06);
@@ -105,7 +110,7 @@ border-color:#008cff;
 }
 
 input{
-width:90%;
+width:100%;
 padding:14px;
 border-radius:25px;
 border:none;
@@ -285,7 +290,6 @@ Seguir para a lista de músicas
 <button class="filtro-btn" onclick="aplicarFiltro('rock', this)">Rock</button>
 <button class="filtro-btn" onclick="aplicarFiltro('metal', this)">Metal</button>
 <button class="filtro-btn" onclick="aplicarFiltro('vocaloid', this)">Vocaloid</button>
-<button class="filtro-btn" onclick="aplicarFiltro('citypop', this)">Citypop</button>
 
 </div>
 
@@ -391,7 +395,7 @@ card.style.display=mostrar?"block":"none"
 
 })
 
-},750)
+},300)
 
 })
 

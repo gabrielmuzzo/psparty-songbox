@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -11,12 +12,15 @@
 box-sizing:border-box;
 }
 
+html,body{
+overflow-x:hidden;
+max-width:100%;
+}
+
 body{
 font-family:'Poppins',sans-serif;
 margin:0;
 color:white;
-overflow-x:hidden;
-max-width:100vw;
 
 background:
 radial-gradient(circle at 20% 20%, rgba(0,140,255,0.25), transparent 40%),
@@ -84,6 +88,10 @@ drop-shadow(0 0 35px rgba(0,140,255,0.2));
 
 .filtros{
 margin-bottom:10px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:8px;
 }
 
 .filtro-btn{
@@ -91,11 +99,11 @@ background:rgba(255,255,255,0.05);
 color:white;
 border:1px solid rgba(255,255,255,0.15);
 padding:6px 12px;
-margin:4px;
 border-radius:20px;
 font-size:13px;
 cursor:pointer;
 transition:all .15s;
+white-space:nowrap;
 }
 
 .filtro-btn:hover{
@@ -407,3 +415,4 @@ aplicarFiltro("hit", document.querySelector(".filtro-btn"))
 
 </body>
 </html>
+```

@@ -270,6 +270,74 @@ cursor:pointer;
 100%{transform:rotate(-20deg) translateY(0px);}
 }
 
+/* BOTÃO VOLTAR AO TOPO - ESTILO PLAYSTATION */
+
+.topo-btn{
+
+position:fixed;
+bottom:28px;
+right:28px;
+
+width:52px;
+height:52px;
+
+border:none;
+border-radius:50%;
+
+background:linear-gradient(145deg,#008cff,#0066ff);
+
+color:white;
+
+font-size:24px;
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+box-shadow:
+0 0 8px rgba(0,140,255,0.7),
+0 0 20px rgba(0,140,255,0.45),
+0 0 35px rgba(0,140,255,0.25);
+
+opacity:0;
+pointer-events:none;
+
+transform:translateY(30px) scale(.8);
+
+transition:
+opacity .35s ease,
+transform .35s ease,
+box-shadow .3s ease;
+
+z-index:4000;
+
+}
+
+/* quando aparece */
+
+.topo-btn.mostrar{
+
+opacity:1;
+pointer-events:auto;
+
+transform:translateY(0) scale(1);
+
+}
+
+/* hover */
+
+.topo-btn:hover{
+
+transform:translateY(-4px) scale(1.05);
+
+box-shadow:
+0 0 12px rgba(0,140,255,0.9),
+0 0 28px rgba(0,140,255,0.6),
+0 0 45px rgba(0,140,255,0.35);
+
+}
+  
 </style>
 </head>
 
@@ -352,14 +420,23 @@ data-search="{{ (m.musica ~ ' ' ~ m.artista ~ ' ' ~ (m.observacao or '')) | lowe
 
 </div>
 
+<button id="btnTopo" class="topo-btn">△</button>
+  
 <script>
 
-document.getElementById("popupBtn").onclick=function(){
-document.getElementById("popup").style.display="none"
-}
+document.addEventListener("DOMContentLoaded", function(){
 
-const search=document.getElementById("search")
-const cards=document.querySelectorAll(".card")
+const popupBtn = document.getElementById("popupBtn")
+const popup = document.getElementById("popup")
+const search = document.getElementById("search")
+const cards = document.querySelectorAll(".card")
+const btnTopo = document.getElementById("btnTopo")
+
+if(popupBtn){
+popupBtn.onclick = function(){
+popup.style.display="none"
+}
+}
 
 function normalizar(texto){
 return texto.toLowerCase().replace(/-/g,"").trim()
@@ -369,7 +446,7 @@ function extrairTags(tagString){
 return normalizar(tagString).split(/\s+/).filter(t => t.length>0)
 }
 
-function aplicarFiltro(palavra, botao){
+window.aplicarFiltro = function(palavra, botao){
 
 document.querySelectorAll(".filtro-btn").forEach(btn=>{
 btn.classList.remove("destaque")
@@ -379,13 +456,14 @@ if(botao){
 botao.classList.add("destaque")
 }
 
-search.value=palavra
+search.value = palavra
 search.dispatchEvent(new Event("input"))
 
 }
 
 let debounceTimer
 
+if(search){
 search.addEventListener("input",function(){
 
 clearTimeout(debounceTimer)
@@ -397,32 +475,35 @@ const value=normalizar(search.value)
 cards.forEach(card=>{
 
 const text=card.dataset.search
-const tags=extrairTags(card.dataset.tag||"")
+const tags=extrairTags(card.dataset.tag || "")
 
 let mostrar=false
 
 if(value===""){
 mostrar=true
-}else if(value==="hit"){
+}
+else if(value==="hit"){
 if(tags.includes("hit")) mostrar=true
-}else{
+}
+else{
 if(text.includes(value)) mostrar=true
 if(tags.includes(value)) mostrar=true
 }
 
-card.style.display=mostrar?"block":"none"
+card.style.display = mostrar ? "block" : "none"
 
 })
 
 },300)
 
 })
-
-window.onload=function(){
-aplicarFiltro("hit", document.querySelector(".filtro-btn"))
 }
 
-const observer=new IntersectionObserver((entries)=>{
+aplicarFiltro("hit", document.querySelector(".filtro-btn"))
+
+/* animação dos cards */
+
+const observer = new IntersectionObserver((entries)=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting){
 entry.target.classList.add("apareceu")
@@ -430,8 +511,31 @@ entry.target.classList.add("apareceu")
 })
 },{threshold:0.15})
 
-document.querySelectorAll(".card").forEach(card=>{
+cards.forEach(card=>{
 observer.observe(card)
+})
+
+/* botão voltar ao topo */
+
+window.addEventListener("scroll",function(){
+
+if(window.scrollY > 300){
+btnTopo.classList.add("mostrar")
+}else{
+btnTopo.classList.remove("mostrar")
+}
+
+})
+
+btnTopo.addEventListener("click",function(){
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+})
+
+})
+
 })
 
 </script>

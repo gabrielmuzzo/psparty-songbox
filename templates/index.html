@@ -1,548 +1,1983 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PSPARTY</title>
 
 <style>
 
+/* =========================================================
+   RESET
+========================================================= */
+
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html{
-background:#000814;
+    background:#000814;
+    scroll-behavior:smooth;
 }
 
-html,body{
-overflow-x:hidden;
-max-width:100%;
+html,
+body{
+    overflow-x:hidden;
+    max-width:100%;
 }
 
 body{
-font-family:'Poppins',sans-serif;
-margin:0;
-color:white;
-min-height:100vh;
 
-background:
-radial-gradient(circle at 20% 20%, rgba(0,140,255,0.25), transparent 40%),
-radial-gradient(circle at 80% 10%, rgba(255,255,255,0.12), transparent 40%),
-radial-gradient(circle at 50% 90%, rgba(0,80,200,0.25), transparent 40%),
-linear-gradient(180deg,#0a0a0a,#000814,#000000);
+    font-family:'Poppins', Arial, sans-serif;
 
-background-attachment:fixed;
+    color:white;
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(0,140,255,0.25),
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(255,255,255,0.10),
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(0,80,200,0.25),
+            transparent 40%
+        ),
+
+        linear-gradient(
+            180deg,
+            #0a0a0a,
+            #000814,
+            #000000
+        );
+
+    background-attachment:fixed;
+
 }
 
-/* símbolos Playstation no fundo */
+
+/* =========================================================
+   SÍMBOLOS PLAYSTATION NO FUNDO
+========================================================= */
 
 body::before{
-content:"△ ○ ✕ □   △ ○ ✕ □   △ ○ ✕ □";
-position:fixed;
-top:0;
-left:0;
-width:100vw;
-height:100vh;
-font-size:120px;
-letter-spacing:40px;
-color:rgba(255,255,255,0.06);
-transform:rotate(-20deg);
-pointer-events:none;
-z-index:0;
-animation:flutuar 18s ease-in-out infinite;
+
+    content:"△ ○ ✕ □   △ ○ ✕ □   △ ○ ✕ □";
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100vw;
+    height:100vh;
+
+    font-size:120px;
+
+    letter-spacing:40px;
+
+    color:rgba(255,255,255,0.045);
+
+    transform:rotate(-20deg);
+
+    pointer-events:none;
+
+    z-index:0;
+
+    animation:flutuar 18s ease-in-out infinite;
+
 }
 
-/* barra superior */
+
+/* =========================================================
+   BARRA SUPERIOR
+========================================================= */
 
 .top-bar{
-width:100%;
-background:rgba(0,0,0,0.85);
-backdrop-filter:blur(10px);
-padding:10px;
-text-align:center;
-border-bottom:1px solid rgba(0,140,255,0.25);
 
-font-size:16px;
-font-weight:500;
-letter-spacing:0.6px;
-color:#e8f4ff;
+    width:100%;
 
-text-shadow:0 0 6px rgba(0,140,255,0.35);
+    background:rgba(0,0,0,0.88);
+
+    backdrop-filter:blur(12px);
+
+    -webkit-backdrop-filter:blur(12px);
+
+    padding:12px 10px;
+
+    text-align:center;
+
+    border-bottom:1px solid rgba(0,140,255,0.25);
+
+    font-size:15px;
+
+    font-weight:600;
+
+    letter-spacing:0.6px;
+
+    color:#e8f4ff;
+
+    text-shadow:
+        0 0 8px rgba(0,140,255,0.35);
+
+    position:relative;
+
+    z-index:10;
+
 }
 
-/* container */
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+========================================================= */
 
 .container{
-max-width:600px;
-margin:auto;
-padding:20px;
-text-align:center;
-position:relative;
-z-index:1;
+
+    width:100%;
+
+    max-width:600px;
+
+    margin:0 auto;
+
+    padding:18px 20px 60px;
+
+    text-align:center;
+
+    position:relative;
+
+    z-index:1;
+
 }
+
+
+/* =========================================================
+   LOGO
+========================================================= */
 
 .logo{
-width:140px;
-margin:10px auto 20px auto;
-display:block;
+
+    width:145px;
+
+    max-width:60%;
+
+    margin:8px auto 18px;
+
+    display:block;
+
+    filter:
+        drop-shadow(0 0 10px rgba(0,140,255,0.20));
+
 }
 
-/* filtros */
 
-.filtros{
-margin-bottom:10px;
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:8px;
+/* =========================================================
+   ÁREA DE BUSCA
+========================================================= */
+
+.busca-area{
+
+    margin-bottom:22px;
+
 }
 
-.filtro-btn{
-background:rgba(255,255,255,0.05);
-color:white;
-border:1px solid rgba(255,255,255,0.15);
-padding:6px 12px;
-border-radius:20px;
-font-size:13px;
-cursor:pointer;
-transition:all .15s;
+
+.busca-titulo{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px rgba(0,140,255,0.25);
+
 }
 
-.filtro-btn:hover{
-background:#008cff;
-border-color:#008cff;
+
+.busca-subtitulo{
+
+    font-size:12px;
+
+    color:#8f9aa8;
+
+    margin-bottom:13px;
+
 }
 
-.filtro-btn.destaque{
-background:#008cff;
-border-color:#008cff;
+
+/* =========================================================
+   CAMPO DE PESQUISA
+========================================================= */
+
+.busca-wrapper{
+
+    position:relative;
+
+    width:100%;
+
 }
 
-/* busca */
+
+.busca-icone{
+
+    position:absolute;
+
+    left:19px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    font-size:20px;
+
+    pointer-events:none;
+
+    z-index:2;
+
+}
+
 
 input{
-width:100%;
-padding:14px;
-border-radius:25px;
-border:none;
-font-size:16px;
-background:#1b1b1b;
-color:white;
-outline:none;
-box-shadow:0 4px 15px rgba(0,0,0,0.6);
-margin-bottom:20px;
+
+    width:100%;
+
+    height:58px;
+
+    padding:0 22px 0 52px;
+
+    border-radius:30px;
+
+    border:2px solid rgba(0,140,255,0.40);
+
+    font-family:inherit;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(27,27,27,0.97),
+            rgba(8,15,24,0.97)
+        );
+
+    color:white;
+
+    outline:none;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.65),
+        0 0 15px rgba(0,140,255,0.08);
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .2s ease;
+
 }
 
-/* cards */
+
+input::placeholder{
+
+    color:#8f9aa8;
+
+}
+
+
+input:focus{
+
+    border-color:#008cff;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.65),
+        0 0 12px rgba(0,140,255,0.45),
+        0 0 30px rgba(0,140,255,0.18);
+
+    transform:scale(1.01);
+
+}
+
+
+/* =========================================================
+   TÍTULO DOS GÊNEROS
+========================================================= */
+
+.filtros-area{
+
+    margin-bottom:24px;
+
+}
+
+
+.filtros-titulo{
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#dceeff;
+
+    margin-bottom:11px;
+
+}
+
+
+.filtros-subtitulo{
+
+    font-size:11px;
+
+    color:#7f8b99;
+
+    margin-bottom:14px;
+
+}
+
+
+/* =========================================================
+   FILTROS
+========================================================= */
+
+.filtros{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:9px;
+
+    width:100%;
+
+}
+
+
+/* =========================================================
+   BOTÕES DE GÊNERO
+========================================================= */
+
+.filtro-btn{
+
+    background:rgba(255,255,255,0.07);
+
+    color:white;
+
+    border:1px solid rgba(0,140,255,0.30);
+
+    padding:10px 16px;
+
+    min-height:44px;
+
+    border-radius:25px;
+
+    font-family:inherit;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.35);
+
+    transition:
+        background .2s ease,
+        transform .15s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+
+}
+
+
+/* Hover */
+
+.filtro-btn:hover{
+
+    background:#008cff;
+
+    border-color:#008cff;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 5px 18px rgba(0,140,255,0.40);
+
+}
+
+
+/* Clique */
+
+.filtro-btn:active{
+
+    transform:scale(.95);
+
+}
+
+
+/* Botão selecionado */
+
+.filtro-btn.destaque{
+
+    background:
+        linear-gradient(
+            135deg,
+            #008cff,
+            #0066ff
+        );
+
+    border-color:#008cff;
+
+    box-shadow:
+        0 0 10px rgba(0,140,255,0.45),
+        0 5px 18px rgba(0,140,255,0.25);
+
+}
+
+
+/* =========================================================
+   SEPARADOR
+========================================================= */
+
+.lista-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin:5px 2px 12px;
+
+    padding-bottom:10px;
+
+    border-bottom:1px solid rgba(255,255,255,0.08);
+
+}
+
+
+.lista-titulo{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#dceeff;
+
+}
+
+
+.lista-info{
+
+    font-size:11px;
+
+    color:#77818e;
+
+}
+
+
+/* =========================================================
+   CARDS DAS MÚSICAS
+========================================================= */
 
 .card{
-background:linear-gradient(145deg, rgba(30,30,30,0.85), rgba(15,15,15,0.9));
-padding:16px;
-margin-bottom:14px;
-border-radius:14px;
-border:1px solid rgba(0,140,255,0.25);
 
-backdrop-filter:blur(8px);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30,30,30,0.88),
+            rgba(15,15,15,0.94)
+        );
 
-box-shadow:0 6px 20px rgba(0,0,0,0.6);
+    padding:16px 17px 16px 20px;
 
-transition:all .3s ease;
-position:relative;
+    margin-bottom:13px;
 
-opacity:0;
-transform:translateY(25px) scale(.96);
+    border-radius:14px;
+
+    border:1px solid rgba(0,140,255,0.25);
+
+    backdrop-filter:blur(8px);
+
+    -webkit-backdrop-filter:blur(8px);
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,0.60);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease,
+        opacity .3s ease;
+
+    position:relative;
+
+    overflow:hidden;
+
+    opacity:0;
+
+    transform:
+        translateY(25px)
+        scale(.96);
+
 }
+
+
+/* Card aparecendo */
 
 .card.apareceu{
-opacity:1;
-transform:translateY(0) scale(1);
+
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
 }
+
+
+/* Barra azul lateral */
 
 .card::before{
-content:"";
-position:absolute;
-left:0;
-top:0;
-height:100%;
-width:4px;
-background:linear-gradient(180deg,#008cff,#00d4ff);
-border-radius:4px 0 0 4px;
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    height:100%;
+
+    width:4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #008cff,
+            #00d4ff
+        );
+
+    border-radius:
+        4px 0 0 4px;
+
 }
 
-/* texto */
+
+/* Hover dos cards */
+
+.card:hover{
+
+    border-color:
+        rgba(0,140,255,0.50);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.65),
+        0 0 15px rgba(0,140,255,0.08);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* =========================================================
+   TEXTO DOS CARDS
+========================================================= */
 
 .musica{
-font-weight:600;
-font-size:18px;
-margin-bottom:2px;
+
+    font-weight:700;
+
+    font-size:18px;
+
+    line-height:1.3;
+
+    margin-bottom:3px;
+
 }
+
 
 .artista{
-font-size:14px;
-color:#e6e6e6;
-margin-bottom:8px;
+
+    font-size:14px;
+
+    color:#e1e6eb;
+
+    line-height:1.4;
+
+    margin-bottom:7px;
+
 }
+
 
 .observacao{
-font-size:12.5px;
-color:#9aa3ad;
-margin-top:4px;
+
+    font-size:12px;
+
+    color:#9aa3ad;
+
+    line-height:1.4;
+
+    margin-top:4px;
+
 }
 
-/* destaques */
+
+/* =========================================================
+   DESTAQUES DAS OBSERVAÇÕES
+========================================================= */
 
 .sem-bateria,
 .sem-letra,
 .sem-guitarra{
-color:#ff9a00;
-font-weight:bold;
+
+    color:#ff9a00;
+
+    font-weight:bold;
+
 }
 
-/* popup */
+
+/* =========================================================
+   POPUP
+========================================================= */
 
 .popup-overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(6px);
-z-index:5000;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,0.55);
+
+    backdrop-filter:blur(8px);
+
+    -webkit-backdrop-filter:blur(8px);
+
+    z-index:5000;
+
 }
+
 
 .popup-box{
-background:#111;
-border:1px solid rgba(255,255,255,0.15);
-padding:40px;
-border-radius:18px;
-text-align:center;
-max-width:420px;
+
+    width:100%;
+
+    max-width:420px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #090d13
+        );
+
+    border:1px solid rgba(0,140,255,0.30);
+
+    padding:36px 28px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.80),
+        0 0 30px rgba(0,140,255,0.10);
+
 }
+
 
 .popup-icones{
-font-size:32px;
-letter-spacing:12px;
-margin-bottom:10px;
-color:#008cff;
+
+    font-size:32px;
+
+    letter-spacing:12px;
+
+    margin-bottom:12px;
+
+    color:#008cff;
+
+    text-shadow:
+        0 0 15px rgba(0,140,255,0.50);
+
 }
+
 
 .popup-title{
-font-size:24px;
-margin-bottom:10px;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
 }
+
 
 .popup-text{
-color:#ccc;
-line-height:1.6;
-margin-bottom:25px;
+
+    color:#ccc;
+
+    line-height:1.6;
+
+    font-size:14px;
+
+    margin-bottom:25px;
+
 }
+
+
+/* Instagram */
 
 .popup-insta{
-display:inline-block;
-padding:14px 26px;
-border-radius:30px;
-font-weight:bold;
-background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);
-color:white;
-text-decoration:none;
-margin-bottom:15px;
+
+    display:inline-block;
+
+    padding:14px 26px;
+
+    border-radius:30px;
+
+    font-weight:bold;
+
+    background:
+        linear-gradient(
+            45deg,
+            #f9ce34,
+            #ee2a7b,
+            #6228d7
+        );
+
+    color:white;
+
+    text-decoration:none;
+
+    margin-bottom:5px;
+
+    box-shadow:
+        0 5px 20px rgba(238,42,123,0.20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
 }
+
+
+.popup-insta:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 25px rgba(238,42,123,0.30);
+
+}
+
+
+/* Botão continuar */
 
 .popup-btn{
-display:block;
-margin:15px auto 0 auto;
-padding:10px 22px;
-border:none;
-border-radius:30px;
-background:#008cff;
-color:white;
-cursor:pointer;
+
+    display:block;
+
+    margin:15px auto 0;
+
+    padding:11px 22px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#008cff;
+
+    color:white;
+
+    font-family:inherit;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
 }
 
-@keyframes flutuar{
-0%{transform:rotate(-20deg) translateY(0px);}
-50%{transform:rotate(-20deg) translateY(-40px);}
-100%{transform:rotate(-20deg) translateY(0px);}
+
+.popup-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 5px 18px rgba(0,140,255,0.40);
+
 }
 
-/* BOTÃO VOLTAR AO TOPO - ESTILO PLAYSTATION */
+
+/* =========================================================
+   BOTÃO VOLTAR AO TOPO
+========================================================= */
 
 .topo-btn{
 
-position:fixed;
-bottom:40px;
-right:30px;
+    position:fixed;
 
-width:52px;
-height:52px;
+    bottom:30px;
 
-border:none;
-border-radius:50%;
+    right:25px;
 
-background:linear-gradient(145deg,#008cff,#0066ff);
+    width:54px;
 
-color:white;
+    height:54px;
 
-font-size:24px;
-cursor:pointer;
+    border:none;
 
-display:flex;
-align-items:center;
-justify-content:center;
+    border-radius:50%;
 
-box-shadow:
-0 0 8px rgba(0,140,255,0.7),
-0 0 20px rgba(0,140,255,0.45),
-0 0 35px rgba(0,140,255,0.25);
+    background:
+        linear-gradient(
+            145deg,
+            #008cff,
+            #0066ff
+        );
 
-opacity:0;
-pointer-events:none;
+    color:white;
 
-transform:translateY(30px) scale(.8);
+    font-size:24px;
 
-transition:
-opacity .35s ease,
-transform .35s ease,
-box-shadow .3s ease;
+    cursor:pointer;
 
-z-index:4000;
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    box-shadow:
+        0 0 8px rgba(0,140,255,0.7),
+        0 0 20px rgba(0,140,255,0.45),
+        0 0 35px rgba(0,140,255,0.25);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transform:
+        translateY(30px)
+        scale(.8);
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease,
+        box-shadow .3s ease;
+
+    z-index:4000;
 
 }
 
-/* quando aparece */
 
 .topo-btn.mostrar{
 
-opacity:1;
-pointer-events:auto;
+    opacity:1;
 
-transform:translateY(0) scale(1);
+    pointer-events:auto;
+
+    transform:
+        translateY(0)
+        scale(1);
 
 }
 
-/* hover */
 
 .topo-btn:hover{
 
-transform:translateY(-4px) scale(1.05);
+    transform:
+        translateY(-4px)
+        scale(1.05);
 
-box-shadow:
-0 0 12px rgba(0,140,255,0.9),
-0 0 28px rgba(0,140,255,0.6),
-0 0 45px rgba(0,140,255,0.35);
+    box-shadow:
+        0 0 12px rgba(0,140,255,0.9),
+        0 0 28px rgba(0,140,255,0.6),
+        0 0 45px rgba(0,140,255,0.35);
 
 }
-  
+
+
+/* =========================================================
+   MENSAGEM SEM RESULTADOS
+========================================================= */
+
+.sem-resultados{
+
+    display:none;
+
+    padding:30px 15px;
+
+    color:#8f9aa8;
+
+    font-size:14px;
+
+}
+
+
+.sem-resultados strong{
+
+    display:block;
+
+    color:white;
+
+    font-size:17px;
+
+    margin-bottom:5px;
+
+}
+
+
+/* =========================================================
+   ANIMAÇÃO DO FUNDO
+========================================================= */
+
+@keyframes flutuar{
+
+    0%{
+        transform:
+            rotate(-20deg)
+            translateY(0px);
+    }
+
+    50%{
+        transform:
+            rotate(-20deg)
+            translateY(-40px);
+    }
+
+    100%{
+        transform:
+            rotate(-20deg)
+            translateY(0px);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - CELULAR
+========================================================= */
+
+@media(max-width:600px){
+
+    .top-bar{
+
+        font-size:14px;
+
+        padding:11px 8px;
+
+    }
+
+
+    .container{
+
+        padding:
+            15px
+            15px
+            70px;
+
+    }
+
+
+    .logo{
+
+        width:135px;
+
+        margin-top:5px;
+
+        margin-bottom:16px;
+
+    }
+
+
+    /* Busca */
+
+    .busca-titulo{
+
+        font-size:17px;
+
+    }
+
+
+    .busca-subtitulo{
+
+        font-size:11px;
+
+    }
+
+
+    input{
+
+        height:58px;
+
+        font-size:16px;
+
+        padding-left:50px;
+
+    }
+
+
+    /* Gêneros */
+
+    .filtros{
+
+        gap:8px;
+
+    }
+
+
+    .filtro-btn{
+
+        padding:
+            11px
+            15px;
+
+        min-height:45px;
+
+        font-size:13px;
+
+    }
+
+
+    /* Cards */
+
+    .card{
+
+        padding:
+            15px
+            15px
+            15px
+            19px;
+
+    }
+
+
+    .musica{
+
+        font-size:17px;
+
+    }
+
+
+    .artista{
+
+        font-size:13px;
+
+    }
+
+
+    /* Botão topo */
+
+    .topo-btn{
+
+        width:50px;
+
+        height:50px;
+
+        right:18px;
+
+        bottom:20px;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media(max-width:380px){
+
+    .container{
+
+        padding-left:12px;
+
+        padding-right:12px;
+
+    }
+
+
+    .filtro-btn{
+
+        padding:
+            10px
+            13px;
+
+        font-size:12px;
+
+    }
+
+
+    input{
+
+        font-size:15px;
+
+    }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =====================================================
+     POPUP
+===================================================== -->
+
 <div id="popup" class="popup-overlay">
-<div class="popup-box">
 
-<div class="popup-icones">△ ○ ✕ □</div>
-<div class="popup-title">Sugira músicas 🎶</div>
-<div class="popup-text">Deixe sua sugestão de músicas no nosso Instagram 😄</div>
+    <div class="popup-box">
 
-<a class="popup-insta" href="https://instagram.com/pspartyoficial" target="_blank">
-Ir para o Instagram
-</a>
+        <div class="popup-icones">
+            △ ○ ✕ □
+        </div>
 
-<button id="popupBtn" class="popup-btn">
-Seguir para a lista de músicas
-</button>
+        <div class="popup-title">
+            Sugira músicas 🎶
+        </div>
+
+        <div class="popup-text">
+            Deixe sua sugestão de músicas no nosso Instagram 😄
+        </div>
+
+        <a
+            class="popup-insta"
+            href="https://instagram.com/pspartyoficial"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Ir para o Instagram
+        </a>
+
+        <button
+            id="popupBtn"
+            class="popup-btn"
+        >
+            Seguir para a lista de músicas
+        </button>
+
+    </div>
 
 </div>
-</div>
+
+
+<!-- =====================================================
+     BARRA SUPERIOR
+===================================================== -->
 
 <div class="top-bar">
-🎸 {{ total_banco }} músicas disponíveis
+
+    🎸 {{ total_banco }} músicas disponíveis
+
 </div>
+
+
+<!-- =====================================================
+     CONTEÚDO PRINCIPAL
+===================================================== -->
 
 <div class="container">
 
-<div class="filtros">
 
-<button class="filtro-btn destaque" onclick="aplicarFiltro('hit', this)">🔥 Mais Tocadas</button>
-<button class="filtro-btn" onclick="aplicarFiltro('', this)">Todos</button>
-<button class="filtro-btn" onclick="aplicarFiltro('brasil', this)">Brasil</button>
-<button class="filtro-btn" onclick="aplicarFiltro('kpop', this)">K-pop</button>
-<button class="filtro-btn" onclick="aplicarFiltro('jrock', this)">J-rock</button>
-<button class="filtro-btn" onclick="aplicarFiltro('jpop', this)">J-pop</button>
-<button class="filtro-btn" onclick="aplicarFiltro('anime', this)">Anime</button>
-<button class="filtro-btn" onclick="aplicarFiltro('pop', this)">Pop</button>
-<button class="filtro-btn" onclick="aplicarFiltro('rock', this)">Rock</button>
-<button class="filtro-btn" onclick="aplicarFiltro('metal', this)">Metal</button>
-<button class="filtro-btn" onclick="aplicarFiltro('indie', this)">Indie</button>
-<button class="filtro-btn" onclick="aplicarFiltro('vocaloid', this)">Vocaloid</button>
-<button class="filtro-btn" onclick="aplicarFiltro('soundtrack', this)">Soundtrack</button>
-<button class="filtro-btn" onclick="aplicarFiltro('50s-80s', this)">50s-80s</button>
-  
+    <!-- LOGO -->
+
+    <img
+        src="{{ url_for('static', filename='logo.png') }}"
+        class="logo"
+        alt="PSPARTY"
+    >
+
+
+    <!-- =================================================
+         BUSCA
+    ================================================== -->
+
+    <div class="busca-area">
+
+        <div class="busca-titulo">
+            🔎 Encontre uma música
+        </div>
+
+        <div class="busca-subtitulo">
+            Pesquise por música, artista ou anime
+        </div>
+
+        <div class="busca-wrapper">
+
+            <div class="busca-icone">
+                🔍
+            </div>
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Digite o nome da música..."
+                autocomplete="off"
+                autofocus
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         FILTROS
+    ================================================== -->
+
+    <div class="filtros-area">
+
+        <div class="filtros-titulo">
+            🎵 Ou escolha um gênero
+        </div>
+
+        <div class="filtros-subtitulo">
+            Toque em uma categoria para filtrar a lista
+        </div>
+
+
+        <div class="filtros">
+
+
+            <button
+                class="filtro-btn destaque"
+                onclick="aplicarFiltro('hit', this)"
+            >
+                🔥 Mais Tocadas
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('', this)"
+            >
+                🎵 Todos
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('brasil', this)"
+            >
+                🇧🇷 Brasil
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('kpop', this)"
+            >
+                🇰🇷 K-pop
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('jrock', this)"
+            >
+                🇯🇵 J-rock
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('jpop', this)"
+            >
+                🇯🇵 J-pop
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('anime', this)"
+            >
+                🍥 Anime
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('pop', this)"
+            >
+                ⭐ Pop
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('rock', this)"
+            >
+                🎸 Rock
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('metal', this)"
+            >
+                🤘 Metal
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('indie', this)"
+            >
+                🎧 Indie
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('vocaloid', this)"
+            >
+                🎤 Vocaloid
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('soundtrack', this)"
+            >
+                🎬 Soundtrack
+            </button>
+
+
+            <button
+                class="filtro-btn"
+                onclick="aplicarFiltro('50s-80s', this)"
+            >
+                🕺 50s–80s
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CABEÇALHO DA LISTA
+    ================================================== -->
+
+    <div class="lista-header">
+
+        <div class="lista-titulo">
+            🎶 Músicas
+        </div>
+
+        <div
+            class="lista-info"
+            id="resultadoInfo"
+        >
+            Mais tocadas
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         LISTA DE MÚSICAS
+    ================================================== -->
+
+    <div id="songs">
+
+
+        {% for m in musicas %}
+
+
+        <div
+            class="card"
+
+            data-tag="{{ m.tag }}"
+
+            data-search="{{
+                (
+                    m.musica
+                    ~ ' '
+                    ~ m.artista
+                    ~ ' '
+                    ~ (m.observacao or '')
+                ) | lower
+            }}"
+        >
+
+
+            <div class="musica">
+                {{ m.musica }}
+            </div>
+
+
+            <div class="artista">
+                {{ m.artista }}
+            </div>
+
+
+            {% if m.observacao %}
+
+            <div class="observacao">
+
+                {{
+                    m.observacao
+
+                    | replace(
+                        "Sem bateria",
+                        '<span class="sem-bateria">Sem bateria</span>'
+                    )
+
+                    | replace(
+                        "sem bateria",
+                        '<span class="sem-bateria">sem bateria</span>'
+                    )
+
+                    | replace(
+                        "Sem letra",
+                        '<span class="sem-letra">Sem letra</span>'
+                    )
+
+                    | replace(
+                        "sem letra",
+                        '<span class="sem-letra">sem letra</span>'
+                    )
+
+                    | safe
+                }}
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <!-- =================================================
+         SEM RESULTADOS
+    ================================================== -->
+
+    <div
+        id="semResultados"
+        class="sem-resultados"
+    >
+
+        <strong>
+            😕 Nenhuma música encontrada
+        </strong>
+
+        Tente pesquisar outro nome ou escolher outro gênero.
+
+    </div>
+
+
 </div>
 
-<img src="{{ url_for('static', filename='logo.png') }}" class="logo">
 
-<input type="text" id="search" placeholder="Pesquisar artista, música ou anime..." autofocus>
+<!-- =====================================================
+     BOTÃO VOLTAR AO TOPO
+===================================================== -->
 
-<div id="songs">
+<button
+    id="btnTopo"
+    class="topo-btn"
+    aria-label="Voltar ao topo"
+>
 
-{% for m in musicas %}
+    △
 
-<div class="card"
-data-tag="{{ m.tag }}"
-data-search="{{ (m.musica ~ ' ' ~ m.artista ~ ' ' ~ (m.observacao or '')) | lower }}">
+</button>
 
-<div class="musica">{{ m.musica }}</div>
-<div class="artista">{{ m.artista }}</div>
 
-{% if m.observacao %}
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
-<div class="observacao">
-
-{{ m.observacao
-| replace("Sem bateria", '<span class="sem-bateria">Sem bateria</span>')
-| replace("sem bateria", '<span class="sem-bateria">sem bateria</span>')
-| replace("Sem letra", '<span class="sem-letra">Sem letra</span>')
-| replace("sem letra", '<span class="sem-letra">sem letra</span>')
-| safe }}
-
-</div>
-
-{% endif %}
-
-</div>
-
-{% endfor %}
-
-</div>
-
-</div>
-
-<button id="btnTopo" class="topo-btn">△</button>
-  
 <script>
 
-document.addEventListener("DOMContentLoaded", function(){
 
-const popupBtn = document.getElementById("popupBtn")
-const popup = document.getElementById("popup")
-const search = document.getElementById("search")
-const cards = document.querySelectorAll(".card")
-const btnTopo = document.getElementById("btnTopo")
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
-if(popupBtn){
-popupBtn.onclick = function(){
-popup.style.display="none"
-}
-}
+        /* =================================================
+           ELEMENTOS
+        ================================================== */
 
-function normalizar(texto){
-return texto.toLowerCase().replace(/-/g,"").trim()
-}
+        const popup =
+            document.getElementById("popup");
 
-function extrairTags(tagString){
-return normalizar(tagString).split(/\s+/).filter(t => t.length>0)
-}
+        const popupBtn =
+            document.getElementById("popupBtn");
 
-window.aplicarFiltro = function(palavra, botao){
+        const search =
+            document.getElementById("search");
 
-document.querySelectorAll(".filtro-btn").forEach(btn=>{
-btn.classList.remove("destaque")
-})
+        const cards =
+            document.querySelectorAll(".card");
 
-if(botao){
-botao.classList.add("destaque")
-}
+        const btnTopo =
+            document.getElementById("btnTopo");
 
-search.value = palavra
-search.dispatchEvent(new Event("input"))
+        const semResultados =
+            document.getElementById("semResultados");
 
-}
+        const resultadoInfo =
+            document.getElementById("resultadoInfo");
 
-let debounceTimer
 
-if(search){
-search.addEventListener("input",function(){
+        /* =================================================
+           POPUP
+        ================================================== */
 
-clearTimeout(debounceTimer)
+        if(popupBtn){
 
-debounceTimer=setTimeout(()=>{
+            popupBtn.onclick = function(){
 
-const value=normalizar(search.value)
+                popup.style.display = "none";
 
-cards.forEach(card=>{
+            };
 
-const text=card.dataset.search
-const tags=extrairTags(card.dataset.tag || "")
+        }
 
-let mostrar=false
 
-if(value===""){
-mostrar=true
-}
-else if(value==="hit"){
-if(tags.includes("hit")) mostrar=true
-}
-else{
-if(text.includes(value)) mostrar=true
-if(tags.includes(value)) mostrar=true
-}
+        /* =================================================
+           NORMALIZAR TEXTO
+        ================================================== */
 
-card.style.display = mostrar ? "block" : "none"
+        function normalizar(texto){
 
-})
+            return texto
+                .toLowerCase()
+                .replace(/-/g,"")
+                .trim();
 
-},300)
+        }
 
-})
-}
 
-aplicarFiltro("hit", document.querySelector(".filtro-btn"))
+        /* =================================================
+           EXTRAIR TAGS
+        ================================================== */
 
-/* animação dos cards */
+        function extrairTags(tagString){
 
-const observer = new IntersectionObserver((entries)=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("apareceu")
-}
-})
-},{threshold:0.15})
+            return normalizar(tagString)
+                .split(/\s+/)
+                .filter(
+                    tag => tag.length > 0
+                );
 
-cards.forEach(card=>{
-observer.observe(card)
-})
+        }
 
-/* botão voltar ao topo */
 
-window.addEventListener("scroll",function(){
+        /* =================================================
+           APLICAR FILTRO
+        ================================================== */
 
-if(window.scrollY > 550){
-btnTopo.classList.add("mostrar")
-}else{
-btnTopo.classList.remove("mostrar")
-}
+        window.aplicarFiltro = function(
+            palavra,
+            botao
+        ){
 
-})
+            /* Remove destaque dos botões */
 
-btnTopo.addEventListener("click",function(){
+            document
+                .querySelectorAll(".filtro-btn")
+                .forEach(function(btn){
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-})
+                    btn.classList.remove(
+                        "destaque"
+                    );
 
-})
+                });
 
-})
+
+            /* Destaca botão selecionado */
+
+            if(botao){
+
+                botao.classList.add(
+                    "destaque"
+                );
+
+            }
+
+
+            /* Coloca filtro no campo de busca */
+
+            search.value = palavra;
+
+
+            /* Dispara pesquisa */
+
+            search.dispatchEvent(
+                new Event("input")
+            );
+
+
+            /* Atualiza texto */
+
+            if(palavra === "hit"){
+
+                resultadoInfo.textContent =
+                    "🔥 Mais tocadas";
+
+            }
+
+            else if(palavra === ""){
+
+                resultadoInfo.textContent =
+                    "Todas as músicas";
+
+            }
+
+            else{
+
+                resultadoInfo.textContent =
+                    botao
+                    ? botao.textContent.trim()
+                    : palavra;
+
+            }
+
+        };
+
+
+        /* =================================================
+           PESQUISA
+        ================================================== */
+
+        let debounceTimer;
+
+
+        if(search){
+
+            search.addEventListener(
+                "input",
+                function(){
+
+                    clearTimeout(
+                        debounceTimer
+                    );
+
+
+                    debounceTimer =
+                        setTimeout(
+                            function(){
+
+                                const value =
+                                    normalizar(
+                                        search.value
+                                    );
+
+
+                                let quantidade =
+                                    0;
+
+
+                                /* =================================
+                                   PESQUISAR CARDS
+                                ================================= */
+
+                                cards.forEach(
+                                    function(card){
+
+                                        const text =
+                                            card.dataset.search || "";
+
+
+                                        const tags =
+                                            extrairTags(
+                                                card.dataset.tag || ""
+                                            );
+
+
+                                        let mostrar =
+                                            false;
+
+
+                                        /* =============================
+                                           TODOS
+                                        ============================= */
+
+                                        if(value === ""){
+
+                                            mostrar = true;
+
+                                        }
+
+
+                                        /* =============================
+                                           MAIS TOCADAS
+                                        ============================= */
+
+                                        else if(
+                                            value === "hit"
+                                        ){
+
+                                            if(
+                                                tags.includes("hit")
+                                            ){
+
+                                                mostrar = true;
+
+                                            }
+
+                                        }
+
+
+                                        /* =============================
+                                           OUTROS FILTROS
+                                        ============================= */
+
+                                        else{
+
+                                            if(
+                                                text.includes(value)
+                                            ){
+
+                                                mostrar = true;
+
+                                            }
+
+
+                                            if(
+                                                tags.includes(value)
+                                            ){
+
+                                                mostrar = true;
+
+                                            }
+
+                                        }
+
+
+                                        /* =============================
+                                           MOSTRAR / ESCONDER
+                                        ============================= */
+
+                                        card.style.display =
+                                            mostrar
+                                            ? "block"
+                                            : "none";
+
+
+                                        if(mostrar){
+
+                                            quantidade++;
+
+                                        }
+
+                                    }
+                                );
+
+
+                                /* =================================
+                                   SEM RESULTADOS
+                                ================================= */
+
+                                if(
+                                    quantidade === 0
+                                ){
+
+                                    semResultados.style.display =
+                                        "block";
+
+                                }
+
+                                else{
+
+                                    semResultados.style.display =
+                                        "none";
+
+                                }
+
+
+                                /* =================================
+                                   ATUALIZAR CONTADOR
+                                ================================= */
+
+                                if(value !== "hit" && value !== ""){
+
+                                    resultadoInfo.textContent =
+                                        quantidade +
+                                        (
+                                            quantidade === 1
+                                            ? " resultado"
+                                            : " resultados"
+                                        );
+
+                                }
+
+
+                            },
+                            200
+                        );
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           ANIMAÇÃO DOS CARDS
+        ================================================== */
+
+        const observer =
+            new IntersectionObserver(
+                function(entries){
+
+                    entries.forEach(
+                        function(entry){
+
+                            if(
+                                entry.isIntersecting
+                            ){
+
+                                entry.target.classList.add(
+                                    "apareceu"
+                                );
+
+                                observer.unobserve(
+                                    entry.target
+                                );
+
+                            }
+
+                        }
+                    );
+
+                },
+                {
+                    threshold:0.10
+                }
+            );
+
+
+        cards.forEach(
+            function(card){
+
+                observer.observe(card);
+
+            }
+        );
+
+
+        /* =================================================
+           BOTÃO VOLTAR AO TOPO
+        ================================================== */
+
+        window.addEventListener(
+            "scroll",
+            function(){
+
+                if(
+                    window.scrollY > 450
+                ){
+
+                    btnTopo.classList.add(
+                        "mostrar"
+                    );
+
+                }
+
+                else{
+
+                    btnTopo.classList.remove(
+                        "mostrar"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           CLIQUE NO BOTÃO TOPO
+        ================================================== */
+
+        btnTopo.addEventListener(
+            "click",
+            function(){
+
+                window.scrollTo({
+
+                    top:0,
+
+                    behavior:"smooth"
+
+                });
+
+            }
+        );
+
+
+        /* =================================================
+           FILTRO INICIAL
+        ================================================= */
+
+        aplicarFiltro(
+            "hit",
+            document.querySelector(
+                ".filtro-btn"
+            )
+        );
+
+
+    }
+);
 
 </script>
 
+
 </body>
+
 </html>
